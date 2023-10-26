@@ -1,6 +1,6 @@
 import sqlite3
 from contextlib import closing
-import os
+# import os
 
 from objects import Category, Movie
 
@@ -9,12 +9,13 @@ conn = None
 def connect():
     global conn
     if not conn:
-        # getting the absolute path to the database file
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        DB_FILE = os.path.join(current_dir, "db", "movies.sqlite")
+        # ----- another way to access directory ----- 
         
-        # DB_FILE = "/Movie_Project/db_tester/movies.sqlite" <----- do not need these anymore
-        # DB_FILE = "/murach/python/_db/movies.sqlite"
+        # getting the absolute path to the database file
+        # current_dir = os.path.dirname(os.path.abspath(__file__))
+        # DB_FILE = os.path.join(current_dir, "db", "movies.sqlite")
+        
+        DB_FILE = "db/movies.sqlite" 
         conn = sqlite3.connect(DB_FILE)
         conn.row_factory = sqlite3.Row
 
