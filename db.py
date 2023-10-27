@@ -36,7 +36,7 @@ def make_movie_list(results):
         movies.append(make_movie(row))
     return movies
 
-def get_movies():
+def get_movies(): # this query will retrieve movie information that includes name, year, minutes, and category
     query = '''SELECT movieID, Movie.name, year, minutes,
                   Movie.categoryID,
                   Category.name as categoryName
@@ -46,7 +46,7 @@ def get_movies():
         c.execute(query)
         results = c.fetchall()
 
-    return make_movie_list(results)
+    return make_movie_list(results) # this will create a list of movie objects from the query results
 
 def get_categories():
     query = '''SELECT categoryID, name as categoryName

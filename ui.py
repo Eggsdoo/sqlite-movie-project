@@ -60,34 +60,34 @@ def display_movies_by_year():
     display_movies(movies, year)
 
 def sort_movies():
-    sorting_option = input("Sort by (name/year/category): ").lower()
+    sorting_option = input("Sort by (name/year/category): ").lower() # prompting user to choose sorting option
     movies = db.get_movies()
 
-    if sorting_option == "name":
-        sorted_movies = sorted(movies, key=lambda x: x.name)
-    elif sorting_option == "year":
+    if sorting_option == "name": # sorting movies by name
+        sorted_movies = sorted(movies, key=lambda x: x.name) 
+    elif sorting_option == "year": # sorting movies by year
         sorted_movies = sorted(movies, key=lambda x: x.year)
-    elif sorting_option == "category":
+    elif sorting_option == "category": # sorting movies by category
         sorted_movies = sorted(movies, key=lambda x: x.category.name)
     else:
         print("Invalid sorting option. Please try again.")
         return 
-    display_movies(sorted_movies, "All Movies") # sorting_option <- do not need this anymore
+    display_movies(sorted_movies, "All Movies") # this will display sorted movies
 
 def filter_movies():
-    year = get_int("Filter by Year (enter 0 to skip): ")
-    category_id = get_int("Filter by Category (enter 0 to skip): ")
+    year = get_int("Filter by Year (enter 0 to skip): ") # prompt user for year filter
+    category_id = get_int("Filter by Category (enter 0 to skip): ") # prompt user for category filter
 
     movies = db.get_movies()
     filtered_movies = movies
 
-    if year > 0:
+    if year > 0: # this will apply year filter if a year is entered
         filtered_movies = [movie for movie in filtered_movies if movie.year == year]
 
-    if category_id > 0:
+    if category_id > 0: # this will apply category filter if a category ID is entered
         filtered_movies = [movie for movie in filtered_movies if movie.category.id == category_id]
 
-    if year > 0 or category_id > 0:
+    if year > 0 or category_id > 0: # this will display filtered movies with user input
         display_movies(filtered_movies, "Filtered Movies")
 
 def add_movie():
