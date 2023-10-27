@@ -11,7 +11,7 @@ def display_menu():
     print("cat  - View movies by category")
     print("year - View movies by year")
     print("sort - Sort Movies") # new feature
-    print("filter - Filter Movies") # new feature
+    print("fil - Filter Movies") # new feature
     print("add  - Add a movie")
     print("del  - Delete a movie")
     print("exit - Exit program")
@@ -74,6 +74,22 @@ def sort_movies():
         return 
     display_movies(sorted_movies, "All Movies") # sorting_option <- do not need this anymore
 
+def filter_movies():
+    year = get_int("Filter by Year (enter 0 to skip): ")
+    category_id = get_int("Filter by Category (enter 0 to skip): ")
+
+    movies = db.get_movies()
+    filtered_movies = movies
+
+    if year > 0:
+        filtered_movies = [movie for movie in filtered_movies if movie.year == year]
+
+    if category_id > 0:
+        filtered_movies = [movie for movie in filtered_movies if movie.category.id == category_id]
+
+    if year > 0 or category_id > 0:
+        display_movies(filtered_movies, "Filtered Movies")
+
 def add_movie():
     name        = input("Name: ")
     year        = get_int("Year: ")
@@ -109,6 +125,8 @@ def main():
             sorted_movies = sort_movies()
             if sorted_movies:
                 display_movies(sorted_movies, "All Movies")
+        elif command == "fil":
+            filter_movies()
         elif command == "add":
             add_movie()
         elif command == "del":
