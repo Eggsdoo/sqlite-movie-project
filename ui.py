@@ -10,6 +10,8 @@ def display_menu():
     print("COMMAND MENU")
     print("cat  - View movies by category")
     print("year - View movies by year")
+    print("sort - Sort Movies") # new feature
+    print("filter - Filter Movies") # new feature
     print("add  - Add a movie")
     print("del  - Delete a movie")
     print("exit - Exit program")
@@ -22,9 +24,9 @@ def display_categories():
         print(f"{category.id}. {category.name}")
     print()
     
-def display_movies(movies, title_term):
+def display_movies(movies, title_term): # sort_by=None do not need this anymore
     print(f"MOVIES - {title_term}")
-
+    
     print(f"{'ID':4}{'Name':38}{'Year':6}" 
           f"{'Mins':6}{'Category':10}")
     print("-" * 63)
@@ -57,6 +59,21 @@ def display_movies_by_year():
     movies = db.get_movies_by_year(year)
     display_movies(movies, year)
 
+def sort_movies():
+    sorting_option = input("Sort by (name/year/category): ").lower()
+    movies = db.get_movies()
+
+    if sorting_option == "name":
+        sorted_movies = sorted(movies, key=lambda x: x.name)
+    elif sorting_option == "year":
+        sorted_movies = sorted(movies, key=lambda x: x.year)
+    elif sorting_option == "category":
+        sorted_movies = sorted(movies, key=lambda x: x.category.name)
+    else:
+        print("Invalid sorting option. Please try again.")
+        return 
+    display_movies(sorted_movies, "All Movies") # sorting_option <- do not need this anymore
+
 def add_movie():
     name        = input("Name: ")
     year        = get_int("Year: ")
@@ -88,6 +105,10 @@ def main():
             display_movies_by_category()
         elif command == "year":
             display_movies_by_year()
+        elif command == "sort":
+            sorted_movies = sort_movies()
+            if sorted_movies:
+                display_movies(sorted_movies, "All Movies")
         elif command == "add":
             add_movie()
         elif command == "del":

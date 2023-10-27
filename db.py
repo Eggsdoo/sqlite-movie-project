@@ -36,6 +36,18 @@ def make_movie_list(results):
         movies.append(make_movie(row))
     return movies
 
+def get_movies():
+    query = '''SELECT movieID, Movie.name, year, minutes,
+                  Movie.categoryID,
+                  Category.name as categoryName
+           FROM Movie JOIN Category
+                  ON Movie.categoryID = Category.categoryID'''
+    with closing(conn.cursor()) as c:
+        c.execute(query)
+        results = c.fetchall()
+
+    return make_movie_list(results)
+
 def get_categories():
     query = '''SELECT categoryID, name as categoryName
                FROM Category'''
